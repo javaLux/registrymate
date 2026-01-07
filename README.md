@@ -1,8 +1,8 @@
 <div align="center">
-  <span style="font-size: 2.5em; font-weight: bold; vertical-align: middle;">
-    <img src="Icon.png" width="48" style="vertical-align: middle; margin-right: 10px;">
+  <h1>
+    <img src="Icon.png" width="48" style="vertical-align:middle;">
     RegistryMate
-  </span>
+  </h1>
 </div>
 
 <br>
