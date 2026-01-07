@@ -1,9 +1,11 @@
 <div align="center">
-  <h1>
-    <img src="Icon.png" width="48" style="vertical-align:middle;">
+  <span style="font-size: 2.5em; font-weight: bold; vertical-align: middle;">
+    <img src="Icon.png" width="48" style="vertical-align: middle; margin-right: 10px;">
     RegistryMate
-  </h1>
+  </span>
 </div>
+
+<br>
 
 [![Go](https://img.shields.io/badge/Go-1.22+-00ADD8?logo=go&logoColor=white)](https://golang.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
