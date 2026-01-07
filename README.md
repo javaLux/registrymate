@@ -31,7 +31,7 @@ The app focuses on **usability, transparency, and reliability** when working wit
   - [Windows](#windows)
 - [Running from Source](#running-from-source)
 - [Building from Source](#building-from-source)
-- [Usage](#usage-instructions)
+- [Usage](#usage)
 - [Contribution](#contributing)
 - [License](#license)
 
