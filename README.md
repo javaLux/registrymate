@@ -29,8 +29,6 @@ The app focuses on **usability, transparency, and reliability** when working wit
 - [Contribution](#contributing)
 - [License](#license)
 
----
-
 ## Features
 
 - Create Kubernetes **ImagePullSecrets** as valid YAML
@@ -39,8 +37,6 @@ The app focuses on **usability, transparency, and reliability** when working wit
   - Stores up to **100 entries**
   - Oldest entries are automatically removed when the limit is reached
 - **Base64 Encode / Decode** utility for Docker-Config JSON string
-
----
 
 ## Screenshots
 
@@ -54,8 +50,6 @@ The app focuses on **usability, transparency, and reliability** when working wit
   <img src="../assets/registrymate-dark.png" alt="RegistryMate Dark-Theme" width="700" />
 </p>
 
----
-
 ## Installation
 The easiest way to install is to use the precompiled binaries for your platform.
 
@@ -65,7 +59,7 @@ The easiest way to install is to use the precompiled binaries for your platform.
 * [ ] Release v1.0
   * [ ] Windows build
   * [ ] macOS build
-  * [ ] Linux AppImage
+  * [ ] Linux build
 
 
 ### Linux (Debian/Ubuntu)
@@ -76,8 +70,6 @@ The easiest way to install is to use the precompiled binaries for your platform.
 
 ### Windows
 - work in progress
-
----
 
 ## Running from Source
 
@@ -96,8 +88,6 @@ go run .
 ```
 
 The GUI window will open, allowing you to create easily Kubernetes ImagePullSecrets
-
----
 
 ## Building from Source
 
@@ -185,15 +175,15 @@ fyne install --icon Icon.png
 
 1. Start the application
 2. Enter required information:
-  - Registry:
-    - **URL**
-    - **Username**
-    - **Password or token**
+    - Registry:
+      - **URL**
+      - **Username**
+      - **Password or token**
 
-3. Optional - Set Secret-Metadata
-  - These values must comply with [Kubernetes-Naming-Rules](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/).
-  - **Name** -> If not set or invalid, a random name will be generated
-  - **Namespace** -> If invalid, it is omitted.
+3. Optional - Secret-Metadata
+    - These values must comply with [Kubernetes-Naming-Rules](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/).
+      - **Name** -> If not set or invalid, a random name will be generated
+      - **Namespace** -> If invalid, it is omitted.
 
 4. Generate the ImagePullSecret by pressing the ► Button or hit ENTER
 5. Choose one of the following actions:
@@ -202,8 +192,6 @@ fyne install --icon Icon.png
 6. Use the Base64 Encode / Decode section if you need to inspect or verify the Docker-Config JSON string
 
 Previously used registries and metadata are stored in the history and can be reused quickly.
-
----
 
 ## Contributing
 
@@ -214,8 +202,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
----
 
 ## License
 
