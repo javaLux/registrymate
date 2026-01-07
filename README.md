@@ -1,9 +1,13 @@
-<div align="center">
-  <h1>
-    <img src="Icon.png" width="48" style="vertical-align:middle;">
-    RegistryMate
-  </h1>
-</div>
+<table align="center">
+  <tr>
+    <td>
+      <img src="Icon.png" width="64" alt="RegistryMate Icon">
+    </td>
+    <td>
+      <h1>RegistryMate</h1>
+    </td>
+  </tr>
+</table>
 
 <br>
 
