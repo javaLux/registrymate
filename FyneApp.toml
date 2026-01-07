@@ -1,0 +1,17 @@
+Website = "https://github.com/javaLux/registrymate"
+
+[Details]
+Icon = "Icon.png"
+Name = "RegistryMate"
+ID = "com.javaLux.registrymate"
+Version = "1.0.0"
+Build = 1
+
+[LinuxAndBSD]
+GenericName = "Registry Mate"
+Categories = ["Development", "Utility"]
+Comment = "Create Kubernetes ImagePullSecrets"
+Keywords = ["secret", "docker", "image"]
+
+[Migrations]
+fyneDo = true
