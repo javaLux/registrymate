@@ -47,6 +47,16 @@ jobs:
       with:
         go-version: 1.25
 
+    - name: Install Fyne dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          gcc \
+          libgl1-mesa-dev \
+          xorg-dev \
+          libxkbcommon-dev \
+          pkg-config
+
     - name: Run golangci-lint
       uses: golangci/golangci-lint-action@v9
       with:
@@ -81,5 +91,15 @@ jobs:
       with:
         go-version: 1.25
 
+    - name: Install Fyne dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          gcc \
+          libgl1-mesa-dev \
+          xorg-dev \
+          libxkbcommon-dev \
+          pkg-config
+          
     - name: Build
       run: go build ./...
