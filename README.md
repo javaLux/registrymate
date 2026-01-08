@@ -11,6 +11,7 @@
 
 <br>
 
+[![Build Status](https://github.com/javaLux/registrymate/actions/workflows/ci.yaml/badge.svg)](https://github.com/javaLux/registrymate/actions)
 [![Go](https://img.shields.io/badge/Go-1.22+-00ADD8?logo=go&logoColor=white)](https://golang.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
 [![Fyne](https://img.shields.io/badge/Fyne-2.6+-orange?logo=go)](https://fyne.io/)
