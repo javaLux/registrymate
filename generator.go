@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 	"time"
@@ -128,8 +129,7 @@ func (g *generator) buildButtons() {
 		themeBtnIcon = ui.LightThemeIcon
 	}
 
-	var themeBtn *widget.Button
-	themeBtn = widget.NewButtonWithIcon("", themeBtnIcon, g.changeTheme)
+	themeBtn := widget.NewButtonWithIcon("", themeBtnIcon, g.changeTheme)
 
 	g.clearHistoryBtn = clearHistoryBtn
 	g.generateBtn = generateBtn
@@ -404,7 +404,12 @@ func (g *generator) saveDialog() {
 					return
 				}
 
-				defer uriWriter.Close()
+				defer func() {
+					if err := uriWriter.Close(); err != nil {
+						log.Printf("File-Save - failed to close uriWriter: %v", err)
+						dialog.ShowError(err, g.window)
+					}
+				}()
 
 				originalPath := uriWriter.URI().Path()
 

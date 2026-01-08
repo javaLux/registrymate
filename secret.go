@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"log"
 
 	"gopkg.in/yaml.v3"
 )
@@ -81,7 +82,11 @@ func (s *Secret) ToYAML() (string, error) {
 
 	enc := yaml.NewEncoder(&buf)
 	enc.SetIndent(2)
-	defer enc.Close()
+	defer func() {
+		if err := enc.Close(); err != nil {
+			log.Printf("YAML-Encoder - failed to close encoder: %v", err)
+		}
+	}()
 
 	if err := enc.Encode(s); err != nil {
 		return "", err

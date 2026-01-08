@@ -2,6 +2,7 @@ package utils
 
 import (
 	"bufio"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -12,7 +13,11 @@ func WriteFile(path string, content []byte) error {
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	defer func() {
+		if err := file.Close(); err != nil {
+			log.Printf("YAML-File [ %v ]- failed to close file: %v", path, err)
+		}
+	}()
 
 	writer := bufio.NewWriter(file)
 
