@@ -29,7 +29,7 @@ func (a *AppSettings) IsLightTheme() bool {
 func LoadAppSettings(a fyne.App) *AppSettings {
 	isLightTheme := a.Preferences().BoolWithFallback(PrefKeyIsLightTheme, false)
 	width := a.Preferences().FloatWithFallback(PrefKeyWindowWidth, 650)
-	height := a.Preferences().FloatWithFallback(PrefKeyWindowHeight, 550)
+	height := a.Preferences().FloatWithFallback(PrefKeyWindowHeight, 500)
 	registries := a.Preferences().StringListWithFallback(PrefKeyRegistries, []string{})
 	namespaces := a.Preferences().StringListWithFallback(PrefKeyNamespaces, []string{})
 	names := a.Preferences().StringListWithFallback(PrefKeyNames, []string{})
