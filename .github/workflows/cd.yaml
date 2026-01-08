@@ -1,0 +1,56 @@
+name: CD
+
+on:
+  workflow_dispatch:  # Trigger this workflow manually
+
+permissions:
+  contents: read
+
+jobs:
+  package-linux:
+    name: Package Linux App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.25
+
+      - name: Setup Fyne
+        uses: ./.github/actions/fyne-linux-setup
+
+      - name: Install Fyne tool
+        run: go install fyne.io/tools/cmd/fyne@latest
+
+      - name: Read metadata
+        run: |
+          APP_NAME=$(grep '^Name' FyneApp.toml | sed 's/.*= "\(.*\)"/\1/')
+          APP_VERSION=$(grep '^Version' FyneApp.toml | sed 's/.*= "\(.*\)"/\1/')
+          ARCH=$(uname -m)
+
+          echo "APP_NAME=$APP_NAME" >> $GITHUB_ENV
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+          echo "ARCH=$ARCH" >> $GITHUB_ENV
+
+          echo "Packaging $APP_NAME version $APP_VERSION for linux/$ARCH"
+
+      - name: Package application for Linux
+        run: fyne package --release
+
+      - name: Rename Linux package
+        run: |
+          ORIGINAL="${APP_NAME}.tar.xz"
+          TARGET="${APP_NAME}-${APP_VERSION}-linux-${ARCH}.tar.xz"
+
+          mv "$ORIGINAL" "$TARGET"
+
+      - name: Upload Linux artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fyne-linux-${{ env.APP_VERSION }}-${{ env.ARCH }}
+          path: |
+            *-linux-*.tar.xz
