@@ -1,10 +1,19 @@
 name: CD-Windows
 
 on:
-  workflow_dispatch:  # Trigger this workflow manually
+  release:
+    types:
+      - created # Trigger this workflow only when a new release is created
 
 permissions:
-  contents: read
+  contents: write
+  checks: write
+  actions: read
+  issues: read
+  packages: write
+  pull-requests: read
+  repository-projects: read
+  statuses: read
 
 jobs:
   package-windows:
@@ -42,17 +51,24 @@ jobs:
       - name: Package application
         run: fyne package --release
 
-      - name: Rename package
+      - name: Create ZIP archive
         shell: bash
         run: |
           ORIGINAL="${APP_NAME}.exe"
-          TARGET="${APP_NAME}-${APP_VERSION}-windows-${ARCH}.exe"
+          TARGET="${APP_NAME}-${APP_VERSION}.exe"
 
           mv "$ORIGINAL" "$TARGET"
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+          ZIP_NAME="${APP_NAME}-${APP_VERSION}-windows-${ARCH}.zip"
+
+          zip "$ZIP_NAME" "$TARGET"
+
+          echo "ARCHIVE=$ZIP_NAME" >> $GITHUB_ENV
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
-          name: fyne-windows-${{ env.APP_VERSION }}-${{ env.ARCH }}
-          path: |
-            *-windows-*.exe
+          files: |
+            ${{ env.ARCHIVE }}
