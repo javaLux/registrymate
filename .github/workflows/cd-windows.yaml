@@ -52,7 +52,7 @@ jobs:
         run: fyne package --release
 
       - name: Create ZIP archive
-        shell: bash
+        shell: pwsh
         run: |
           ORIGINAL="${APP_NAME}.exe"
           TARGET="${APP_NAME}-${APP_VERSION}.exe"
@@ -61,7 +61,7 @@ jobs:
 
           ZIP_NAME="${APP_NAME}-${APP_VERSION}-windows-${ARCH}.zip"
 
-          zip "$ZIP_NAME" "$TARGET"
+          7z a "$ZIP_NAME" "$TARGET"
 
           echo "ARCHIVE=$ZIP_NAME" >> $GITHUB_ENV
 
