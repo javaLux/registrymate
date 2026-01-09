@@ -54,16 +54,16 @@ jobs:
       - name: Create ZIP archive
         shell: pwsh
         run: |
-          ORIGINAL="${APP_NAME}.exe"
-          TARGET="${APP_NAME}-${APP_VERSION}.exe"
+            $original = "$env:APP_NAME.exe"
+            $target   = "$env:APP_NAME-$env:APP_VERSION.exe"
 
-          mv "$ORIGINAL" "$TARGET"
+            Rename-Item -Path $original -NewName $target
 
-          ZIP_NAME="${APP_NAME}-${APP_VERSION}-windows-${ARCH}.zip"
+            $zipName = "$env:APP_NAME-$env:APP_VERSION-windows-$env:ARCH.zip"
 
-          7z a "$ZIP_NAME" "$TARGET"
+            Compress-Archive -Path $target -DestinationPath $zipName -Force
 
-          echo "ARCHIVE=$ZIP_NAME" >> $GITHUB_ENV
+            "ARCHIVE=$zipName" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v2
