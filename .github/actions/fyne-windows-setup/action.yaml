@@ -1,0 +1,31 @@
+name: Setup Fyne for Windows
+description: Install required Windows packages for Fyne apps
+
+runs:
+  using: "composite"
+  steps:
+
+  - name: Install MSYS2
+    shell: powershell
+    run: |
+      choco install -y msys2
+      refreshenv
+
+  - name: Update MSYS2 packages
+    shell: 'bash -lc'
+    run: |
+      pacman -Syu --noconfirm
+      pacman -Su --noconfirm
+
+  - name: Install MinGW and Go compiler packages
+    shell: 'bash -lc'
+    run: |
+      pacman -S --noconfirm \
+        git \
+        mingw-w64-x86_64-toolchain \
+        mingw-w64-x86_64-go
+
+  - name: Ensure Go bin path
+    shell: 'bash -lc'
+    run: |
+      echo "export PATH=\$PATH:/mingw64/bin:$(go env GOPATH)/bin" >> ~/.bashrc
