@@ -1,0 +1,58 @@
+name: CD-Windows
+
+on:
+  workflow_dispatch:  # Trigger this workflow manually
+
+permissions:
+  contents: read
+
+jobs:
+  package-windows:
+    name: Package Windows App
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.25
+
+      - name: Setup Fyne
+        uses: ./.github/actions/fyne-windows-setup
+
+      - name: Install Fyne CLI
+        run: go install fyne.io/tools/cmd/fyne@latest
+
+      - name: Read metadata
+        shell: bash
+        run: |
+          APP_NAME=$(grep '^Name' FyneApp.toml | sed 's/.*= "\(.*\)"/\1/')
+          APP_VERSION=$(grep '^Version' FyneApp.toml | sed 's/.*= "\(.*\)"/\1/')
+          ARCH=$(go env GOARCH)
+
+          echo "APP_NAME=$APP_NAME" >> $GITHUB_ENV
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+          echo "ARCH=$ARCH" >> $GITHUB_ENV
+
+          echo "Packaging $APP_NAME version $APP_VERSION for windows/$ARCH"
+
+      - name: Package application
+        run: fyne package --release
+
+      - name: Rename package
+        shell: bash
+        run: |
+          ORIGINAL="${APP_NAME}.exe"
+          TARGET="${APP_NAME}-${APP_VERSION}-windows-${ARCH}.exe"
+
+          mv "$ORIGINAL" "$TARGET"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fyne-windows-${{ env.APP_VERSION }}-${{ env.ARCH }}
+          path: |
+            *-windows-*.exe
