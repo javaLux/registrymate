@@ -28,8 +28,8 @@ The app focuses on **usability, transparency, and reliability** when working wit
 - [Screenshots](#screenshots)
 - [Installation](#installation)
   - [Linux (Debian/Ubuntu)](#linux-debianubuntu)
-  - [macOS](#macos)
   - [Windows](#windows)
+  - [macOS](#macos)
 - [Running from Source](#running-from-source)
 - [Building from Source](#building-from-source)
 - [Usage](#usage)
@@ -58,24 +58,52 @@ The app focuses on **usability, transparency, and reliability** when working wit
 </p>
 
 ## Installation
-The easiest way to install is to use the precompiled binaries for your platform.
+The easiest way to install **RegistryMate**, is to use the precompiled binaries for your platform.
+
+You can download the latest release here:
+  * [Latest-Release](https://github.com/javaLux/registrymate/releases/latest)
 
 ### ToDo
 
-* [ ] Setup CD-Pipeline
-* [ ] Release v1.0
-  * [ ] Windows build
+* [x] Setup CD-Pipeline
+* [x] Release v1.0.0
+  * [x] Linux build
+  * [x] Windows build
   * [ ] macOS build
-  * [ ] Linux build
 
 
 ### Linux (Debian/Ubuntu)
-- work in progress
+- Download the latest release for linux, and follow these steps:
 
-### macOS
-- work in progress
+```bash
+mkdir registrymate
+tar -xvf RegistryMate-<Version>-linux-x86_64.tar.xz -C registrymate
+cd registrymate
+
+# Install only for the current user -> ~./local
+make user-install
+
+# Install System wide
+sudo make install
+```
 
 ### Windows
+- Download the latest release for windows, and follow these steps:
+
+- If you use **Windows 10 build 17063 or later**
+
+```bash
+mkdir registrymate
+tar -xf RegistryMate-<Version\>-windows-amd64.zip -C registrymate
+cd registrymate
+```
+
+- Otherwise you can use the following **Powershell** command, or you Unzip the archive manually
+```bash
+Expand-Archive -Force C:\path\to\RegistryMate-<Version\>-windows-amd64.zip C:\where\to\extract\to
+```
+
+### macOS
 - work in progress
 
 ## Running from Source
@@ -205,9 +233,9 @@ Previously used registries and metadata are stored in the history and can be reu
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+2. Create your feature branch (`git checkout -b feature/YourNewFeature`)
+3. Commit your changes (`git commit -m 'Add some YourNewFeature'`)
+4. Push to the branch (`git push origin feature/YourNewFeature`)
 5. Open a Pull Request
 
 ## License
