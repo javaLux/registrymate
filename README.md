@@ -57,6 +57,12 @@ The app focuses on **usability, transparency, and reliability** when working wit
   <img src="../assets/registrymate-dark.png" alt="RegistryMate Dark-Theme" width="700" />
 </p>
 
+<br>
+
+<p align="center">
+  <img src="../assets/registrymate-secret.png" alt="RegistryMate Secret" width="700" />
+</p>
+
 ## Installation
 The easiest way to install **RegistryMate**, is to use the precompiled binaries for your platform.
 
