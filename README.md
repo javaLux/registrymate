@@ -31,7 +31,7 @@ The app focuses on **usability, transparency, and reliability** when working wit
   - [Windows](#windows)
   - [macOS](#macos)
 - [Running from Source](#running-from-source)
-- [Building from Source](#building-from-source)
+- [Production Build](#production-build)
 - [Usage](#usage)
 - [Contribution](#contributing)
 - [License](#license)
@@ -124,29 +124,7 @@ go run .
 
 The GUI window will open, allowing you to create easily Kubernetes ImagePullSecrets
 
-## Building from Source
-
-### Simple Build
-
-#### Linux
-
-```bash
-GOOS=linux GOARCH=amd64 go build
-```
-
-#### macOS
-
-```bash
-GOOS=darwin GOARCH=amd64 go build
-```
-
-#### Windows
-
-```bash
-GOOS=windows GOARCH=amd64 go build
-```
-
-### Production Build with Packaging
+## Production Build
 
 For production-ready packages with icons, metadata, and installer formats:
 
