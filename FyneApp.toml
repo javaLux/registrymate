@@ -4,7 +4,7 @@ Website = "https://github.com/javaLux/registrymate"
 Icon = "Icon.png"
 Name = "RegistryMate"
 ID = "com.javaLux.registrymate"
-Version = "1.0.0"
+Version = "1.1.0"
 Build = 1
 
 [LinuxAndBSD]
