@@ -48,7 +48,9 @@ jobs:
           echo "Packaging $APP_NAME version $APP_VERSION for linux/$ARCH"
 
       - name: Package application for Linux
-        run: fyne package --release
+        env:
+         COMMIT_HASH: ${{ github.sha }}
+        run: fyne package --release --metadata Commit="$COMMIT_HASH"
 
       - name: Rename Linux package
         run: |

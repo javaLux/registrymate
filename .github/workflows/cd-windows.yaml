@@ -49,19 +49,18 @@ jobs:
           echo "Packaging $APP_NAME version $APP_VERSION for windows/$ARCH"
 
       - name: Package application
-        run: fyne package --release
+        env:
+         COMMIT_HASH: ${{ github.sha }}
+        run: fyne package --release --metadata Commit="$COMMIT_HASH"
 
       - name: Create ZIP archive
         shell: pwsh
         run: |
             $original = "$env:APP_NAME.exe"
-            $target   = "$env:APP_NAME-$env:APP_VERSION.exe"
-
-            Rename-Item -Path $original -NewName $target
 
             $zipName = "$env:APP_NAME-$env:APP_VERSION-windows-$env:ARCH.zip"
 
-            Compress-Archive -Path $target -DestinationPath $zipName -Force
+            Compress-Archive -Path $original -DestinationPath $zipName -Force
 
             "ARCHIVE=$zipName" | Out-File -FilePath $env:GITHUB_ENV -Append
 
