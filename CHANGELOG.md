@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. The format 
 
 ## [Released]
 
+## [1.1.0] - 2026-02-02
+
+### Added
+- There is now an About-Page that you can access by clicking on the info button in the upper right corner
+
+---
+
 ## [1.0.0] - 2026-01-09
 **Starting the journey of RegistryMate [First Stable Release]**
 
