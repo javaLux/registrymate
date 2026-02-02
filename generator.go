@@ -28,6 +28,7 @@ type generator struct {
 	passEntry              *widget.Entry
 	nameSpaceEntry         *widget.SelectEntry
 	nameEntry              *widget.SelectEntry
+	aboutBtn               *widget.Button
 	generateBtn            *widget.Button
 	clearRegEntryBtn       *widget.Button
 	clearUserEntryBtn      *widget.Button
@@ -68,6 +69,15 @@ func (g *generator) loadUI(app fyne.App) {
 		g.appSettings.SaveAppSettings(app)
 	})
 
+	// globally key event handler to generate secret
+	w.Canvas().SetOnTypedKey(func(ke *fyne.KeyEvent) {
+		if ke.Name == fyne.KeyEnter || ke.Name == fyne.KeyReturn {
+			if g.isRequiredInputFilled() {
+				g.buildSecret()
+			}
+		}
+	})
+
 	g.window = w
 
 	// --- Labels ---
@@ -82,6 +92,9 @@ func (g *generator) loadUI(app fyne.App) {
 	g.toast = ui.NewToastPopup(ui.BlueTextColor, g.window.Canvas())
 
 	g.window.SetContent(g.buildLayout())
+
+	// close all remaining windows when the main window is closed
+	g.window.SetMaster()
 	g.window.Show()
 }
 
@@ -94,6 +107,10 @@ func (g *generator) buildLabels() {
 }
 
 func (g *generator) buildButtons() {
+	aboutBtn := widget.NewButtonWithIcon("", theme.InfoIcon(), func() {
+		ui.ShowAbout(fyne.CurrentApp().Metadata(), g.window)
+	})
+
 	generateBtn := widget.NewButtonWithIcon("", theme.MediaPlayIcon(), g.buildSecret)
 	generateBtn.Disable() // initially disabled until required fields are filled
 
@@ -103,7 +120,12 @@ func (g *generator) buildButtons() {
 	saveBtn := widget.NewButtonWithIcon("", theme.DocumentSaveIcon(), g.saveDialog)
 	saveBtn.Disable() // initially disabled until a secret is generated
 
-	copyBtn := widget.NewButtonWithIcon("", theme.ContentCopyIcon(), g.copyToClipboard)
+	copyBtn := widget.NewButtonWithIcon("", theme.ContentCopyIcon(), func() {
+		if g.output.Text != DefaultOutputText {
+			fyne.CurrentApp().Clipboard().SetContent(g.output.Text)
+			g.toast.ShowToast("Copied", 2*time.Second)
+		}
+	})
 	copyBtn.Disable() // initially disabled until a secret is generated
 
 	clearOutputBtn := widget.NewButtonWithIcon("", theme.DeleteIcon(), g.clearOutput)
@@ -131,7 +153,7 @@ func (g *generator) buildButtons() {
 
 	themeBtn := widget.NewButtonWithIcon("", themeBtnIcon, g.changeTheme)
 
-	g.clearHistoryBtn = clearHistoryBtn
+	g.aboutBtn = aboutBtn
 	g.generateBtn = generateBtn
 	g.decodeBtn = decodeBtn
 	g.saveBtn = saveBtn
@@ -142,6 +164,7 @@ func (g *generator) buildButtons() {
 	g.clearPassEntryBtn = clearPassEntryBtn
 	g.clearNameEntryBtn = clearNameEntryBtn
 	g.clearNameSpaceEntryBtn = clearNameSpaceEntryBtn
+	g.clearHistoryBtn = clearHistoryBtn
 	g.themeBtn = themeBtn
 }
 
@@ -218,7 +241,7 @@ func (g *generator) buildEntries() {
 
 func (g *generator) buildLayout() fyne.CanvasObject {
 	// Theme toggle button at the top right corner
-	topLayout := container.NewHBox(g.clearHistoryBtn, layout.NewSpacer(), g.themeBtn)
+	topLayout := container.NewHBox(g.clearHistoryBtn, layout.NewSpacer(), g.aboutBtn, g.themeBtn)
 
 	// Registry input with clear buttons
 	regEntryContainer := container.NewBorder(nil, nil, nil, g.clearRegEntryBtn, g.regEntry)
@@ -356,14 +379,6 @@ func (g *generator) clearHistory() {
 			g.toast.ShowToast("History Cleared", 3*time.Second)
 		}
 	}, g.window)
-}
-
-func (g *generator) copyToClipboard() {
-	if g.output.Text != DefaultOutputText {
-		fyne.CurrentApp().Clipboard().SetContent(g.output.Text)
-
-		g.toast.ShowToast("Copied", 2*time.Second)
-	}
 }
 
 func (g *generator) decodeOrEncodeSecret() {
