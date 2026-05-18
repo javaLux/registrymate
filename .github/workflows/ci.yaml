@@ -30,7 +30,7 @@ jobs:
     - name: Setup Go
       uses: actions/setup-go@v5
       with:
-        go-version: 1.26
+        go-version: 1.25
 
     - name: Check formatting
       run: |
@@ -73,7 +73,7 @@ jobs:
     - name: Setup Go
       uses: actions/setup-go@v5
       with:
-        go-version: 1.26
+        go-version: 1.25
     
     - name: Setup Fyne
       uses: ./.github/actions/fyne-linux-setup
@@ -92,7 +92,7 @@ jobs:
     - name: Setup Go
       uses: actions/setup-go@v5
       with:
-        go-version: 1.26
+        go-version: 1.25
 
     - name: Setup Fyne
       uses: ./.github/actions/fyne-linux-setup
