@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file. The format 
 
 ## [Released]
 
+## [1.1.1] - 2026-05-18
+* updated dependencies
+* updated to go version 1.26.3
+
+### Added
+* MacOS Release Build
+---
+
 ## [1.1.0] - 2026-02-02
 
 ### Added

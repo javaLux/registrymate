@@ -69,15 +69,6 @@ The easiest way to install **RegistryMate**, is to use the precompiled binaries 
 You can download the latest release here:
   * [Latest-Release](https://github.com/javaLux/registrymate/releases/latest)
 
-### ToDo
-
-* [x] Setup CD-Pipeline
-* [x] Release v1.0.0
-  * [x] Linux build
-  * [x] Windows build
-  * [ ] macOS build
-
-
 ### Linux (Debian/Ubuntu)
 - Download the latest release for linux, and follow these steps:
 
@@ -110,7 +101,43 @@ Expand-Archive -Force C:\path\to\RegistryMate-<Version\>-windows-amd64.zip C:\wh
 ```
 
 ### macOS
-- work in progress
+### Requirements
+- macOS 10.15 (Catalina) or later
+- Apple Silicon (arm64)
+
+### Installation
+**1. Download**<br>
+Download the latest release for macOS (`darwin-arm64` → Apple Silicon (M1/M2/M3...)), and follow these steps:
+
+**2. Extract**<br>
+Unzip the downloaded file. You can do this by double-clicking the `.zip` file in Finder
+or via Terminal:
+```bash
+unzip RegistryMate-<Version>-darwin-arm64.zip
+```
+
+**3. Remove Quarantine**<br>
+Since the app is not signed with an Apple Developer certificate, macOS will block it by default.
+Run the following command in Terminal to allow execution:
+```bash
+xattr -cr RegistryMate.app
+```
+
+**4. Run**<br>
+Move the app to your Applications folder and launch:
+
+_Move to Applications_
+```bash
+mv RegistryMate.app /Applications/
+```
+
+_Run directly_
+```bash
+open RegistryMate.app
+```
+
+Note: If macOS still blocks the app, go to System Settings → Privacy & Security
+and click "Open Anyway".
 
 ## Running from Source
 
