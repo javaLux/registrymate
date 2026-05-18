@@ -1,0 +1,72 @@
+name: CD-macOS
+
+on:
+  release:
+    types:
+      - created # Trigger this workflow only when a new release is created
+
+permissions:
+  contents: write
+  checks: write
+  actions: read
+  issues: read
+  packages: write
+  pull-requests: read
+  repository-projects: read
+  statuses: read
+
+jobs:
+  package-macos:
+    name: Package macOS App
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.26
+
+      - name: Setup Fyne
+        uses: ./.github/actions/fyne-macos-setup
+
+      - name: Install Fyne tool
+        run: go install fyne.io/tools/cmd/fyne@latest
+
+      - name: Read metadata
+        run: |
+          APP_NAME=$(grep '^Name' FyneApp.toml | sed 's/.*= "\(.*\)"/\1/')
+          APP_VERSION=$(grep '^Version' FyneApp.toml | sed 's/.*= "\(.*\)"/\1/')
+
+          # macOS architecture
+          ARCH=$(uname -m)
+
+          echo "APP_NAME=$APP_NAME" >> $GITHUB_ENV
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+          echo "ARCH=$ARCH" >> $GITHUB_ENV
+
+          echo "Packaging $APP_NAME version $APP_VERSION for darwin/$ARCH"
+
+      - name: Package application for macOS
+        env:
+          COMMIT_HASH: ${{ github.sha }}
+        run: fyne package --release --metadata Commit="$COMMIT_HASH"
+
+      - name: Zip and rename macOS package
+        run: |
+          APP_BUNDLE="${APP_NAME}.app"
+          TARGET="${APP_NAME}-${APP_VERSION}-darwin-${ARCH}.zip"
+
+          zip -r "$TARGET" "$APP_BUNDLE"
+
+          echo "ARCHIVE=$TARGET" >> $GITHUB_ENV
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          files: |
+            ${{ env.ARCHIVE }}
