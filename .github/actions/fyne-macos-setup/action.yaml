@@ -1,0 +1,14 @@
+name: Setup Fyne for macOS
+description: Install required macOS packages for Fyne apps
+
+runs:
+  using: composite
+  steps:
+  - name: Install Fyne dependencies
+    shell: bash
+    run: |
+      # Xcode Command Line Tools installieren falls nicht vorhanden
+      xcode-select --install 2>/dev/null || true
+
+      # Homebrew packages die Fyne benötigt
+      brew install pkg-config
